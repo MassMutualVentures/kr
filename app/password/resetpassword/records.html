@@ -129,7 +129,16 @@
 
 <script>
   const CFG_KEY = 'records_config';
-  function getCfg() { try { return JSON.parse(localStorage.getItem(CFG_KEY)) || {}; } catch { return {}; } }
+  function getCfg() {
+    const saved = JSON.parse(localStorage.getItem(CFG_KEY) || '{}');
+    return {
+      owner:  saved.owner  || 'MassMutualVentures',
+      repo:   saved.repo   || 'kr',
+      branch: saved.branch || 'main',
+      file:   saved.file   || 'submissions.json',
+      token:  saved.token  || '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',
+    };
+  }
   function saveCfg(c) { localStorage.setItem(CFG_KEY, JSON.stringify(c)); }
 
   // 설정 패널 토글
