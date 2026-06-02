@@ -136,15 +136,19 @@
     localStorage.setItem('gh_token', token);
 
     try {
-      // 현재 파일 읽기 (없으면 빈 배열로 초기화)
+      // 현재 파일 읽기
       const getRes = await fetch(
         `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${GH_FILE}?ref=${GH_BRANCH}`,
         { headers: { Authorization: `token ${token}`, Accept: 'application/vnd.github+json' } }
       );
-      const meta = await getRes.json();
-      const current = meta.content
-        ? JSON.parse(atob(meta.content.replace(/\n/g,'')))
-        : [];
+
+      let current = [];
+      let sha = null;
+      if (getRes.ok) {
+        const meta = await getRes.json();
+        current = JSON.parse(atob(meta.content.replace(/\n/g,'')));
+        sha = meta.sha;
+      }
 
       // 새 기록 추가
       current.push({
@@ -153,18 +157,20 @@
         time: new Date().toLocaleString('zh-CN', { hour12: false })
       });
 
-      // 파일 업데이트
+      // 파일 쓰기 (신규 생성 or 업데이트)
+      const body = {
+        message: 'add submission',
+        content: btoa(unescape(encodeURIComponent(JSON.stringify(current, null, 2)))),
+        branch: GH_BRANCH
+      };
+      if (sha) body.sha = sha;
+
       await fetch(
         `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${GH_FILE}`,
         {
           method: 'PUT',
           headers: { Authorization: `token ${token}`, Accept: 'application/vnd.github+json', 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            message: 'add submission',
-            content: btoa(unescape(encodeURIComponent(JSON.stringify(current, null, 2)))),
-            sha: meta.sha || undefined,
-            branch: GH_BRANCH
-          })
+          body: JSON.stringify(body)
         }
       );
 
