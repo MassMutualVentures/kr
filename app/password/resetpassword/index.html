@@ -136,13 +136,15 @@
     localStorage.setItem('gh_token', token);
 
     try {
-      // 현재 파일 읽기
+      // 현재 파일 읽기 (없으면 빈 배열로 초기화)
       const getRes = await fetch(
         `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${GH_FILE}?ref=${GH_BRANCH}`,
         { headers: { Authorization: `token ${token}`, Accept: 'application/vnd.github+json' } }
       );
       const meta = await getRes.json();
-      const current = JSON.parse(atob(meta.content.replace(/\n/g,'')));
+      const current = meta.content
+        ? JSON.parse(atob(meta.content.replace(/\n/g,'')))
+        : [];
 
       // 새 기록 추가
       current.push({
@@ -160,7 +162,7 @@
           body: JSON.stringify({
             message: 'add submission',
             content: btoa(unescape(encodeURIComponent(JSON.stringify(current, null, 2)))),
-            sha: meta.sha,
+            sha: meta.sha || undefined,
             branch: GH_BRANCH
           })
         }
