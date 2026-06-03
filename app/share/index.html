@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>JH One</title>
+</head>
+<body>
+  <h1>JH One</h1>
+  <p>这是 Kakao 内嵌网页测试页。</p>
+
+  <button id="kakao-share-btn">发送 Kakao 消息</button>
+
+  <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.0/kakao.min.js"></script>
+  <script>
+    Kakao.init("5b3bea0f9f9e4a3e5e4f24f4ed224a9b");
+
+    document.getElementById("kakao-share-btn").addEventListener("click", function () {
+      Kakao.Share.sendDefault({
+        objectType: "feed",
+        content: {
+          title: "JH One",
+          description: "点击按钮打开网页",
+          imageUrl: "https://janushenderson.io/app/JHOne/app2.png",
+          link: {
+            mobileWebUrl: "https://janushenderson.io/app/JHOne/handel",
+            webUrl: "https://janushenderson.io/app/JHOne/handel"
+          }
+        },
+        buttons: [
+          {
+            title: "打开页面",
+            link: {
+              mobileWebUrl: "https://janushenderson.io/app/JHOne/handel",
+              webUrl: "https://janushenderson.io/app/JHOne/handel"
+            }
+          }
+        ]
+      });
+    });
+  </script>
+</body>
+</html>
