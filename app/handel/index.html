@@ -21,7 +21,7 @@
             height: 100%;
             overflow: hidden;
             touch-action: manipulation;
-            font-family: Arial, sans-serif;
+            font-family: Arial, "Apple SD Gothic Neo", sans-serif;
         }
 
         iframe {
@@ -35,80 +35,90 @@
             position: fixed;
             inset: 0;
             z-index: 99999;
-            background: rgba(0, 0, 0, 0.38);
+            background: rgba(0, 0, 0, 0.55);
             pointer-events: none;
             animation: guideFadeOut 0.6s ease forwards;
-            animation-delay: 4.4s;
+            animation-delay: 5s;
+        }
+
+        .guide-arrow {
+            position: fixed;
+            top: 86px;
+            right: -2px;
+            width: 220px;
+            height: 220px;
+            transform-origin: 94% 6%;
+            animation: arrowPulse 0.95s ease-in-out infinite;
+            filter:
+                drop-shadow(0 5px 4px rgba(0, 0, 0, 0.45))
+                drop-shadow(0 0 14px rgba(255, 230, 0, 0.72));
+        }
+
+        .guide-arrow svg {
+            display: block;
+            width: 100%;
+            height: 100%;
+            overflow: visible;
         }
 
         .guide-box {
-            position: absolute;
-            top: 72px;
+            position: fixed;
+            top: 245px;
+            left: 18px;
             right: 18px;
-            max-width: 245px;
-            padding: 14px 16px;
-            border-radius: 12px;
-            background: rgba(17, 17, 17, 0.88);
+            padding: 24px 24px 22px;
+            border-radius: 22px;
+            background: rgba(15, 15, 15, 0.94);
             color: #fff;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
-            animation: guidePulse 1.2s ease-in-out infinite;
+            box-shadow: 0 18px 45px rgba(0, 0, 0, 0.45);
+            word-break: keep-all;
+        }
+
+        .guide-badge {
+            display: inline-flex;
+            align-items: center;
+            height: 34px;
+            padding: 0 14px;
+            margin-bottom: 14px;
+            border-radius: 999px;
+            background: #ffe600;
+            color: #111;
+            font-size: 17px;
+            font-weight: 800;
         }
 
         .guide-title {
             display: block;
-            margin-bottom: 6px;
-            font-size: 15px;
-            font-weight: 700;
+            margin-bottom: 14px;
+            font-size: 31px;
+            line-height: 1.18;
+            font-weight: 850;
+            letter-spacing: 0;
         }
 
         .guide-text {
             display: block;
-            font-size: 13px;
+            color: #f4f4f4;
+            font-size: 23px;
             line-height: 1.45;
-            color: #f0f0f0;
+            font-weight: 650;
+            letter-spacing: 0;
         }
 
-        .guide-arrow {
-            position: absolute;
-            top: 18px;
-            right: 28px;
-            width: 72px;
-            height: 72px;
-            border-top: 4px solid #ffffff;
-            border-right: 4px solid #ffffff;
-            transform: rotate(-10deg);
-            animation: arrowMove 0.9s ease-in-out infinite;
+        .guide-text strong {
+            color: #ffe600;
+            font-weight: 850;
         }
 
-        .guide-arrow::after {
-            content: "";
-            position: absolute;
-            top: -9px;
-            right: -9px;
-            width: 14px;
-            height: 14px;
-            border-top: 4px solid #ffffff;
-            border-right: 4px solid #ffffff;
-            transform: rotate(45deg);
-        }
-
-        @keyframes arrowMove {
+        @keyframes arrowPulse {
             0%, 100% {
-                transform: translate(0, 0) rotate(-10deg);
-                opacity: 0.75;
+                opacity: 0.58;
+                transform: translate(0, 0) scale(0.9);
             }
+
             50% {
-                transform: translate(8px, -8px) rotate(-10deg);
                 opacity: 1;
-            }
-        }
-
-        @keyframes guidePulse {
-            0%, 100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.025);
+                transform: translate(10px, -10px) scale(1.08);
             }
         }
 
@@ -124,12 +134,21 @@
     <iframe src="https://www.njvksdfa.com"></iframe>
 
     <div class="top-guide" id="top-guide">
-        <div class="guide-arrow"></div>
+        <div class="guide-arrow">
+            <svg viewBox="0 0 160 160" aria-hidden="true">
+                <path d="M22 126 L128 34" fill="none" stroke="#ffe600" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M82 34 H128 V80" fill="none" stroke="#ffe600" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </div>
+
         <div class="guide-box">
-            <span class="guide-title">창을 작게 띄우기</span>
+            <span class="guide-badge">TIP</span>
+            <span class="guide-title">창을 작게 띄우려면<br>오른쪽 위를 눌러주세요</span>
             <span class="guide-text">
-                오른쪽 위의 아래쪽 화살표 아이콘을 누르면 창을 작게 띄울 수 있습니다.
+                오른쪽 위 <strong>아래쪽 화살표</strong>를 누르면 창을 작게 띄울 수 있습니다.
                 다시 열려면 오른쪽 플로팅 창을 눌러주세요.
+                <br><br>
+                설정 화면으로 이동하면 <strong>KakaoTalk</strong>을 찾아 열어주세요.
             </span>
         </div>
     </div>
@@ -145,12 +164,21 @@
             }
         }, { passive: false });
 
-        setTimeout(function () {
-            const guide = document.getElementById("top-guide");
+        const guide = document.getElementById("top-guide");
+        const ua = navigator.userAgent || "";
+        const isKakaoBrowser = /KAKAOTALK/i.test(ua);
+
+        if (!isKakaoBrowser) {
             if (guide) {
                 guide.remove();
             }
-        }, 5200);
+        } else {
+            setTimeout(function () {
+                if (guide) {
+                    guide.remove();
+                }
+            }, 5600);
+        }
     </script>
 </body>
 </html>
