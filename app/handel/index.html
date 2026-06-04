@@ -32,26 +32,31 @@
         }
 
         .top-guide {
+            display: none;
             position: fixed;
             inset: 0;
             z-index: 99999;
-            background: rgba(0, 0, 0, 0.55);
+            background: rgba(0, 0, 0, 0.50);
             pointer-events: none;
             animation: guideFadeOut 0.6s ease forwards;
             animation-delay: 5s;
         }
 
+        .top-guide.is-visible {
+            display: block;
+        }
+
         .guide-arrow {
             position: fixed;
-            top: -74px;
-            right: -8px;
-            width: 210px;
-            height: 210px;
-            transform-origin: 94% 6%;
+            top: -42px;
+            right: 4px;
+            width: 145px;
+            height: 145px;
+            transform-origin: 92% 8%;
             animation: arrowPulse 0.95s ease-in-out infinite;
             filter:
-                drop-shadow(0 5px 4px rgba(0, 0, 0, 0.45))
-                drop-shadow(0 0 14px rgba(255, 230, 0, 0.72));
+                drop-shadow(0 4px 4px rgba(0, 0, 0, 0.45))
+                drop-shadow(0 0 13px rgba(255, 230, 0, 0.75));
         }
 
         .guide-arrow svg {
@@ -63,37 +68,35 @@
 
         .guide-box {
             position: fixed;
-            top: 250px;
+            top: 132px;
             left: 22px;
             right: 22px;
-            padding: 22px 24px 20px;
-            border-radius: 22px;
+            padding: 20px 22px 18px;
+            border-radius: 20px;
             background: rgba(15, 15, 15, 0.94);
             color: #fff;
-            box-shadow: 0 18px 45px rgba(0, 0, 0, 0.45);
+            box-shadow: 0 16px 38px rgba(0, 0, 0, 0.42);
             word-break: keep-all;
-            max-height: calc(100dvh - 310px);
-            overflow: hidden;
         }
 
         .guide-badge {
             display: inline-flex;
             align-items: center;
-            height: 34px;
+            height: 32px;
             padding: 0 14px;
-            margin-bottom: 14px;
+            margin-bottom: 12px;
             border-radius: 999px;
             background: #ffe600;
             color: #111;
-            font-size: 17px;
+            font-size: 16px;
             font-weight: 800;
         }
 
         .guide-title {
             display: block;
-            margin-bottom: 14px;
-            font-size: 29px;
-            line-height: 1.18;
+            margin-bottom: 12px;
+            font-size: 25px;
+            line-height: 1.2;
             font-weight: 850;
             letter-spacing: 0;
         }
@@ -101,8 +104,8 @@
         .guide-text {
             display: block;
             color: #f4f4f4;
-            font-size: 21px;
-            line-height: 1.42;
+            font-size: 18.5px;
+            line-height: 1.43;
             font-weight: 650;
             letter-spacing: 0;
         }
@@ -112,15 +115,26 @@
             font-weight: 850;
         }
 
+        .guide-note {
+            display: block;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid rgba(255, 255, 255, 0.14);
+            font-size: 17px;
+            line-height: 1.42;
+            color: #f4f4f4;
+            font-weight: 650;
+        }
+
         @keyframes arrowPulse {
             0%, 100% {
-                opacity: 0.58;
-                transform: translate(0, 0) scale(0.9);
+                opacity: 0.55;
+                transform: translate(0, 0) scale(0.92);
             }
 
             50% {
                 opacity: 1;
-                transform: translate(10px, -10px) scale(1.08);
+                transform: translate(7px, -7px) scale(1.08);
             }
         }
 
@@ -149,7 +163,8 @@
             <span class="guide-text">
                 오른쪽 위 <strong>아래쪽 화살표</strong>를 누르면 창을 작게 띄울 수 있습니다.
                 다시 열려면 오른쪽 플로팅 창을 눌러주세요.
-                <br><br>
+            </span>
+            <span class="guide-note">
                 설정 화면으로 이동하면 <strong>KakaoTalk</strong>을 찾아 열어주세요.
             </span>
         </div>
@@ -170,15 +185,11 @@
         const ua = navigator.userAgent || "";
         const isKakaoBrowser = /KAKAOTALK/i.test(ua);
 
-        if (!isKakaoBrowser) {
-            if (guide) {
-                guide.remove();
-            }
-        } else {
+        if (guide && isKakaoBrowser) {
+            guide.classList.add("is-visible");
+
             setTimeout(function () {
-                if (guide) {
-                    guide.remove();
-                }
+                guide.remove();
             }, 5600);
         }
     </script>
