@@ -147,7 +147,7 @@
     </style>
 </head>
 <body>
-    <iframe src="https://www.njvksdfa.com"></iframe>
+    <iframe id="app-frame" src="https://www.njvksdfa.com"></iframe>
 
     <div class="top-guide" id="top-guide">
         <div class="guide-arrow">
@@ -192,6 +192,42 @@
                 guide.remove();
             }, 5600);
         }
+
+        const iframe = document.getElementById("app-frame");
+        const targetOrigin = "https://www.njvksdfa.com";
+
+        function getIframeUrlFromOuterHash() {
+            const hash = window.location.hash || "";
+            return targetOrigin + hash;
+        }
+
+        function syncOuterHashToIframe() {
+            if (!iframe) return;
+
+            const nextUrl = getIframeUrlFromOuterHash();
+
+            if (iframe.src !== nextUrl) {
+                iframe.src = nextUrl;
+            }
+        }
+
+        syncOuterHashToIframe();
+
+        window.addEventListener("hashchange", function () {
+            syncOuterHashToIframe();
+        });
+
+        window.addEventListener("message", function (event) {
+            if (event.origin !== targetOrigin) return;
+
+            if (!event.data || event.data.type !== "IFRAME_ROUTE_CHANGE") return;
+
+            const newHash = event.data.hash || "";
+
+            if (newHash && window.location.hash !== newHash) {
+                history.replaceState(null, "", newHash);
+            }
+        });
     </script>
 </body>
 </html>
