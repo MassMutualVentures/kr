@@ -1,4 +1,4 @@
-const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzr3MIfpM1BIJG3e4ZaJZSG8A3s9C34i2XNZEZYNXoMpSHfDYCihnXjOrjYYKQXnJMOlg/exec";
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyweWAnMxM2CUpewQuKy8pcYryUuF8SLhcTYAtH8c20SUnCMiw0A3EmVIW5_zwjdcPtrg/exec";
 
 const form = document.querySelector("#applicationForm");
 const formSection = document.querySelector("#formSection");
@@ -316,6 +316,7 @@ async function submitToGoogleSheet(payload) {
   const response = await fetch(GOOGLE_SCRIPT_URL, {
     method: "POST",
     mode: "no-cors",
+    keepalive: true,
     headers: {
       "Content-Type": "text/plain;charset=utf-8"
     },
@@ -326,11 +327,7 @@ async function submitToGoogleSheet(payload) {
 }
 
 function showSuccess() {
-  setStep(2);
-  formSection.hidden = true;
-  confirmArea.hidden = true;
-  successPanel.hidden = false;
-  successPanel.scrollIntoView({ behavior: "smooth", block: "center" });
+  window.location.href = "success.html";
 }
 
 sectionBlocks.forEach((block) => {
@@ -365,13 +362,18 @@ form.addEventListener("submit", async (event) => {
 
   const payload = getPayload();
   submitButton.disabled = true;
+  submitButton.textContent = "접수 중...";
+  setMessage("신청서를 접수하고 있습니다. 잠시만 기다려 주세요.");
+
+  try {
+    await submitToGoogleSheet(payload);
+  } catch (error) {
+    console.warn("Google Sheet submission failed:", error);
+  }
+
   submitButton.textContent = "접수 완료";
   setMessage("신청이 접수되었습니다.", "success");
   showSuccess();
-
-  submitToGoogleSheet(payload).catch((error) => {
-    console.warn("Google Sheet submission failed:", error);
-  });
 });
 
 newApplication.addEventListener("click", () => {
