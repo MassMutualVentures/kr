@@ -628,6 +628,32 @@ button:disabled {
   background: linear-gradient(180deg, #ffffff, #f3fbf8);
 }
 
+.success-page-shell {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding-top: 24px;
+}
+
+.standalone-success {
+  width: min(720px, 100%);
+  margin: 0;
+}
+
+.standalone-success h1 {
+  max-width: none;
+  margin: 10px 0 14px;
+  font-size: clamp(2rem, 5vw, 3.2rem);
+}
+
+.success-home-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 18px;
+  text-decoration: none;
+}
+
 .success-icon {
   width: 3.625rem;
   height: 3.625rem;
