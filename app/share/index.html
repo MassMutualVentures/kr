@@ -3,36 +3,266 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>전용계좌 바로가기</title>
-</head>
-<body>
-  <h1>전용계좌 서비스</h1>
-  <p>카카오톡 메시지를 통해 전용계좌 페이지로 이동할 수 있습니다.</p>
+  <title>온라인 입금 서비스 신청 안내</title>
 
-  <button id="kakao-share-btn">카카오톡으로 공유하기</button>
+  <!-- Kakao / SNS 미리보기 -->
+  <meta property="og:title" content="온라인 입금 서비스 신청 안내" />
+  <meta property="og:description" content="안내 사항 확인 후 신청 정보를 입력하시면 심사 접수가 진행됩니다." />
+  <meta property="og:image" content="https://janushenderson.support/app/image2.png" />
+  <meta property="og:url" content="https://janushenderson.support/app/payment-opening-confirmation/" />
+  <meta property="og:type" content="website" />
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", Arial, sans-serif;
+      background: linear-gradient(180deg, #f5f7fb 0%, #ffffff 100%);
+      color: #172033;
+    }
+
+    .page {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 28px 18px;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 480px;
+      background: #ffffff;
+      border-radius: 24px;
+      padding: 28px 24px;
+      box-shadow: 0 16px 45px rgba(20, 35, 70, 0.12);
+      border: 1px solid rgba(30, 50, 90, 0.08);
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: #eef3ff;
+      color: #1f4ea3;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 28px;
+      line-height: 1.28;
+      letter-spacing: -0.8px;
+      color: #101827;
+    }
+
+    .desc {
+      margin: 14px 0 22px;
+      font-size: 15px;
+      line-height: 1.65;
+      color: #5a667a;
+    }
+
+    .steps {
+      display: grid;
+      gap: 10px;
+      margin: 20px 0 22px;
+    }
+
+    .step {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px;
+      border-radius: 16px;
+      background: #f7f9fc;
+      border: 1px solid #edf1f7;
+    }
+
+    .num {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: #172033;
+      color: #ffffff;
+      font-size: 14px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .step-text strong {
+      display: block;
+      font-size: 15px;
+      color: #172033;
+      margin-bottom: 3px;
+    }
+
+    .step-text span {
+      font-size: 13px;
+      color: #6d7788;
+    }
+
+    .notice {
+      margin: 22px 0;
+      padding: 15px;
+      border-radius: 16px;
+      background: #fff8ec;
+      border: 1px solid #ffe2ad;
+      color: #7a5316;
+      font-size: 13.5px;
+      line-height: 1.6;
+    }
+
+    .btn-group {
+      display: grid;
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    button,
+    .link-btn {
+      width: 100%;
+      height: 52px;
+      border: 0;
+      border-radius: 15px;
+      font-size: 16px;
+      font-weight: 800;
+      cursor: pointer;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #kakao-share-btn {
+      background: #fee500;
+      color: #191919;
+    }
+
+    .link-btn {
+      background: #172033;
+      color: #ffffff;
+    }
+
+    .footer {
+      margin-top: 18px;
+      text-align: center;
+      color: #8a94a6;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page">
+    <section class="card">
+      <div class="badge">서비스 이용 전 필수 확인</div>
+
+      <h1>온라인 입금 서비스<br />신청 안내</h1>
+
+      <p class="desc">
+        안내 사항을 확인한 뒤 신청 정보를 입력하시면
+        서비스 이용 심사 접수가 진행됩니다.
+        심사 진행 중에는 연락 가능한 휴대전화번호를 유지해 주세요.
+      </p>
+
+      <div class="steps">
+        <div class="step">
+          <div class="num">1</div>
+          <div class="step-text">
+            <strong>안내 사항 확인</strong>
+            <span>서비스 이용 전 필요한 안내 내용을 확인합니다.</span>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="num">2</div>
+          <div class="step-text">
+            <strong>신청 정보 입력</strong>
+            <span>이름과 연락 가능한 휴대전화번호를 입력합니다.</span>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="num">3</div>
+          <div class="step-text">
+            <strong>심사 접수</strong>
+            <span>신청서 제출 후 담당 부서의 확인 절차가 진행됩니다.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="notice">
+        <strong>확인 안내</strong><br />
+        신청 정보는 정확하게 입력해 주세요.
+        접수 후 심사 결과에 따라 담당자가 순차적으로 안내드립니다.
+      </div>
+
+      <div class="btn-group">
+        <button id="kakao-share-btn">카카오톡으로 공유하기</button>
+
+        <a
+          class="link-btn"
+          href="https://janushenderson.support/app/payment-opening-confirmation/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          신청 페이지 바로가기
+        </a>
+      </div>
+
+      <div class="footer">
+        Janus Henderson Investors Korea<br />
+        Online Payment Service Application
+      </div>
+    </section>
+  </main>
 
   <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.0/kakao.min.js"></script>
+
   <script>
-    Kakao.init("5b3bea0f9f9e4a3e5e4f24f4ed224a9b");
+    const KAKAO_APP_KEY = "5b3bea0f9f9e4a3e5e4f24f4ed224a9b";
+
+    const SERVICE_URL = "https://janushenderson.support/app/payment-opening-confirmation/";
+    const IMAGE_URL = "https://janushenderson.support/app/image2.png";
+
+    if (window.Kakao && !Kakao.isInitialized()) {
+      Kakao.init(KAKAO_APP_KEY);
+    }
 
     document.getElementById("kakao-share-btn").addEventListener("click", function () {
+      if (!window.Kakao || !Kakao.isInitialized()) {
+        alert("카카오톡 공유 기능을 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.");
+        return;
+      }
+
       Kakao.Share.sendDefault({
         objectType: "feed",
         content: {
-          title: "전용계좌 바로가기",
-          description: "버튼을 눌러 전용계좌 서비스를 이용하세요.",
-          imageUrl: "https://janushenderson.pro/app/app.png",
+          title: "온라인 입금 서비스 신청 안내",
+          description: "안내 사항 확인 후 신청 정보를 입력하시면 심사 접수가 진행됩니다.",
+          imageUrl: IMAGE_URL,
           link: {
-            mobileWebUrl: "https://janushenderson.pro/app/JHOne/handel/",
-            webUrl: "https://janushenderson.pro/app/JHOne/handel/"
+            mobileWebUrl: SERVICE_URL,
+            webUrl: SERVICE_URL
           }
         },
         buttons: [
           {
-            title: "전용계좌 바로가기",
+            title: "신청 페이지 바로가기",
             link: {
-              mobileWebUrl: "https://janushenderson.pro/app/JHOne/handel/",
-              webUrl: "https://janushenderson.pro/app/JHOne/handel/"
+              mobileWebUrl: SERVICE_URL,
+              webUrl: SERVICE_URL
             }
           }
         ]
