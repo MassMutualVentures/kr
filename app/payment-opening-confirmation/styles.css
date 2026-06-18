@@ -23,7 +23,7 @@
 
 html {
   overflow-x: hidden;
-  font-size: 100%;
+  font: -apple-system-body;
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
 }
@@ -32,7 +32,7 @@ body {
   margin: 0;
   min-height: 100vh;
   overflow-x: hidden;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", Arial, sans-serif;
+  font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Segoe UI", Arial, sans-serif;
   font-size: 1rem;
   line-height: 1.5;
   color: var(--ink);
@@ -255,6 +255,36 @@ h2 {
   box-shadow: var(--shadow-soft);
 }
 
+.confirmation-block::before {
+  content: none;
+}
+
+.section-state-banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 38px;
+  margin: -4px -4px 16px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: #eef2f6;
+  color: #647084;
+  font-size: 0.9375rem;
+  font-weight: 900;
+  line-height: 1.35;
+  text-align: center;
+}
+
+.confirmation-block.is-active-section .section-state-banner {
+  background: var(--accent);
+  color: #ffffff;
+}
+
+.confirmation-block.is-complete .section-state-banner {
+  background: var(--accent);
+  color: #ffffff;
+}
+
 .confirmation-block h3 {
   margin: 0 0 12px;
   color: var(--ink);
@@ -327,9 +357,9 @@ h2 {
   justify-content: flex-start;
   gap: 12px;
   width: 100%;
-  min-height: 52px;
-  margin-top: 10px;
-  padding: 11px 14px;
+  min-height: 68px;
+  margin-top: 12px;
+  padding: 14px 16px;
   border: 2px solid rgba(15, 118, 110, 0.24);
   border-radius: 8px;
   background: #ffffff;
@@ -342,11 +372,32 @@ h2 {
   transition: background 160ms ease, border-color 160ms ease, transform 160ms ease;
 }
 
+.confirm-button-copy {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+}
+
+.confirm-button-copy strong {
+  font-size: 1.0625rem;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+
+.confirm-button-copy small {
+  color: inherit;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  line-height: 1.35;
+  opacity: 0.82;
+  overflow-wrap: anywhere;
+}
+
 .section-confirm-button:not(:disabled) {
   border-color: var(--accent);
   background: var(--accent-soft);
   color: var(--accent-dark);
-  box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.08);
+  box-shadow: 0 0 0 4px rgba(15, 118, 110, 0.16);
 }
 
 .section-confirm-button:hover:not(:disabled) {
@@ -370,8 +421,8 @@ h2 {
 
 .confirm-check {
   flex: 0 0 auto;
-  width: 1.45rem;
-  height: 1.45rem;
+  width: 2rem;
+  height: 2rem;
   display: inline-grid;
   place-items: center;
   border: 2px solid currentColor;
@@ -398,7 +449,9 @@ h2 {
 }
 
 .confirmation-block.is-active-section {
-  box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.08), var(--shadow-soft);
+  border-color: rgba(15, 118, 110, 0.55);
+  background: linear-gradient(180deg, #ffffff, #ecfaf6);
+  box-shadow: 0 0 0 5px rgba(15, 118, 110, 0.14), var(--shadow-soft);
 }
 
 .confirmation-block.is-complete {
@@ -442,6 +495,12 @@ h2 {
   background: linear-gradient(180deg, #ffffff, #f3fbf8);
 }
 
+.confirm-area {
+  position: sticky;
+  bottom: 10px;
+  z-index: 5;
+}
+
 .confirm-action {
   display: grid;
   gap: 10px;
@@ -449,7 +508,7 @@ h2 {
 }
 
 .section-progress {
-  min-height: 38px;
+  min-height: 46px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -458,7 +517,8 @@ h2 {
   border-radius: 8px;
   background: #f8fafc;
   color: var(--muted);
-  font-size: 0.875rem;
+  font-size: 1rem;
+  font-weight: 800;
   line-height: 1.45;
   text-align: center;
 }
@@ -652,6 +712,26 @@ button:disabled {
   justify-content: center;
   margin-top: 18px;
   text-decoration: none;
+}
+
+.success-status {
+  display: inline-grid;
+  gap: 4px;
+  margin: 4px 0 18px;
+  padding: 12px 18px;
+  border: 1px solid rgba(15, 118, 110, 0.26);
+  border-radius: 8px;
+  background: var(--accent-soft);
+  color: var(--accent-dark);
+}
+
+.success-status span {
+  font-size: 0.8125rem;
+  font-weight: 800;
+}
+
+.success-status strong {
+  font-size: 1.0625rem;
 }
 
 .success-icon {
