@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Janus Henderson Korea · 邀请函模板（可批量改名 · 可下载）</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+  * { box-sizing: border-box; }
+  body { margin:0; font-family:-apple-system,"Segoe UI","Malgun Gothic","Microsoft YaHei",sans-serif; background:#ece9e2; color:#2b2b29; }
+  .panel { max-width:920px; margin:0 auto; padding:24px 20px 8px; }
+  .panel h1 { font-size:18px; font-weight:600; margin:0 0 4px; }
+  .panel p.sub { font-size:13px; color:#6a6a64; margin:0 0 18px; line-height:1.6; }
+  .card-ui { background:#fff; border:1px solid #ddd9cf; border-radius:12px; padding:18px 20px; margin-bottom:18px; }
+  .card-ui h2 { font-size:13px; font-weight:600; color:#8a7a45; letter-spacing:.04em; text-transform:uppercase; margin:0 0 12px; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px 16px; }
+  label { display:block; font-size:12px; color:#6a6a64; margin-bottom:4px; }
+  input[type=text], select, textarea { width:100%; font:inherit; font-size:14px; padding:8px 10px; border:1px solid #cfcabb; border-radius:7px; background:#fbfaf6; color:#2b2b29; }
+  input:focus, select:focus, textarea:focus { outline:2px solid #c5a253; outline-offset:-1px; }
+  textarea { min-height:120px; resize:vertical; line-height:1.6; font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif; }
+  .check { display:flex; align-items:center; gap:8px; font-size:14px; color:#3a3a36; margin-top:4px; }
+  .check input { width:auto; }
+  .row-actions { display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin:4px 0 22px; }
+  button { font:inherit; font-size:14px; font-weight:500; padding:9px 16px; border-radius:8px; cursor:pointer; border:1px solid #b9b09a; background:#fff; color:#2b2b29; }
+  button:hover { background:#f3f0e8; }
+  button.primary { background:#102746; border-color:#102746; color:#f3eee2; }
+  button.primary:hover { background:#173356; }
+  .count { font-size:13px; color:#6a6a64; }
+  .hint { font-size:12px; color:#8a8a82; margin-top:6px; line-height:1.6; }
+  #cards { max-width:920px; margin:0 auto; padding:0 20px 60px; }
+  .card-page { margin:0 auto 14px; }
+  .card-wrap { background:#fff; box-shadow:0 2px 14px rgba(0,0,0,.12); border-radius:6px; overflow:hidden; }
+  .card-wrap svg { width:100%; max-width:460px; height:auto; display:block; margin:0 auto; }
+  .card-tools { display:flex; justify-content:center; gap:8px; margin:8px 0 18px; }
+  .card-tools button { padding:5px 12px; font-size:12px; }
+  @media print {
+    @page { size:A5 portrait; margin:0; }
+    body { background:#fff; }
+    .no-print { display:none !important; }
+    #cards { max-width:none; margin:0; padding:0; }
+    .card-page { margin:0; width:100%; height:100vh; display:flex; align-items:center; justify-content:center; break-after:page; page-break-after:always; }
+    .card-page:last-child { break-after:auto; page-break-after:auto; }
+    .card-wrap { box-shadow:none; border-radius:0; }
+    .card-wrap svg { max-width:none; width:auto; height:96vh; }
+    svg, svg * { -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  }
+</style>
+</head>
+<body>
+
+<div class="panel no-print">
+  <h1>Janus Henderson Korea · 邀请函模板</h1>
+  <p class="sub">粘贴客人姓名（每行一位），每位自动生成一张请柬 + 一张流程小卡；可逐张下载 PNG 图片，或一键下载全部 PDF。<br>
+  公共信息只需填一次，全部卡片同步更新。卡片正文为韩语，此面板为你的操作界面。</p>
+
+  <div class="card-ui">
+    <h2>公共信息（填一次，全部同步）</h2>
+    <div class="grid">
+      <div><label>日期 일시</label><input type="text" id="f-date" value="2026. 7. 25 (토)"></div>
+      <div><label>时间 시간</label><input type="text" id="f-time" value="오후 6시 30분"></div>
+      <div><label>厅 / 楼层（向酒店确认后填，可留空）</label><input type="text" id="f-floor" placeholder="예: 그랜드볼룸 5층"></div>
+      <div><label>着装 드레스코드</label>
+        <select id="f-dress">
+          <option value="비즈니스 정장 (Business Attire)">비즈니스 정장 (Business Attire)</option>
+          <option value="단정한 정장 차림">단정한 정장 차림</option>
+          <option value="세미 포멀 (Cocktail Attire)">세미 포멀 (Cocktail Attire)</option>
+        </select>
+      </div>
+      <div><label>代表姓名（落款）대표이사</label><input type="text" id="f-rep" placeholder="홍길동"></div>
+      <div><label>回执邮箱 RSVP</label><input type="text" id="f-email" value="events.korea@janushenderson.com"></div>
+    </div>
+    <label class="check"><input type="checkbox" id="f-prog" checked> 为每位客人附上流程小卡（순서 안내）</label>
+  </div>
+
+  <div class="card-ui">
+    <h2>客人姓名（每行一位）</h2>
+    <textarea id="f-names">홍길동</textarea>
+    <p class="hint">· 自动加敬称“귀하”；若已含“귀하／귀중／님”则不重复。<br>
+    · 单位/法人可写“○○자산운용 귀중”；夫妇可写“홍길동 · 김영희 귀하”。</p>
+  </div>
+
+  <div class="row-actions">
+    <button class="primary" id="btn-gen">生成 / 更新</button>
+    <button id="btn-pdf">下载 PDF（全部）</button>
+    <button id="btn-print">打印 / 存为 PDF</button>
+    <span class="count" id="count"></span>
+  </div>
+</div>
+
+<div id="cards"></div>
+
+<script>
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+function honor(name){var n=name.trim();if(!n)return"";if(/(귀하|귀중|님)\s*$/.test(n))return n;return n+"\u3000귀하";}
+
+function inviteCard(nameDisplay,c){
+  var hall=c.floor?c.floor:"콘래드 서울 그랜드볼룸";
+  return '<svg viewBox="108 8 464 814" xmlns="http://www.w3.org/2000/svg">'
+  +'<rect x="120" y="20" width="440" height="790" rx="8" fill="#102746"/>'
+  +'<rect x="120" y="20" width="440" height="790" rx="8" fill="none" stroke="#27466f" stroke-width="1"/>'
+  +'<rect x="142" y="42" width="396" height="746" rx="4" fill="none" stroke="#c5a253" stroke-width="1"/>'
+  +'<rect x="148" y="48" width="384" height="734" rx="3" fill="none" stroke="#c5a253" stroke-width="0.5" opacity="0.55"/>'
+  +'<text x="340" y="92" text-anchor="middle" font-family="Georgia, serif" font-size="12" letter-spacing="6" fill="#c5a253">I N V I T A T I O N</text>'
+  +'<line x1="250" y1="110" x2="306" y2="110" stroke="#c5a253" stroke-width="0.5"/>'
+  +'<path d="M340 104 L346 110 L340 116 L334 110 Z" fill="#c5a253"/>'
+  +'<line x1="374" y1="110" x2="430" y2="110" stroke="#c5a253" stroke-width="0.5"/>'
+  +'<text x="340" y="158" text-anchor="middle" font-family="Georgia, serif" font-size="24" letter-spacing="2" fill="#f3eee2">JANUS HENDERSON</text>'
+  +'<text x="340" y="183" text-anchor="middle" font-family="Georgia, serif" font-size="12" letter-spacing="7" fill="#c5a253">K O R E A</text>'
+  +'<line x1="220" y1="212" x2="320" y2="212" stroke="#c5a253" stroke-width="0.5" opacity="0.7"/>'
+  +'<path d="M340 206 L346 212 L340 218 L334 212 Z" fill="#c5a253"/>'
+  +'<line x1="360" y1="212" x2="460" y2="212" stroke="#c5a253" stroke-width="0.5" opacity="0.7"/>'
+  +'<text x="340" y="256" text-anchor="middle" font-family="\'Nanum Myeongjo\',\'Noto Serif KR\',Georgia,serif" font-size="20" fill="#f3eee2">'+esc(nameDisplay)+'</text>'
+  +'<line x1="200" y1="272" x2="480" y2="272" stroke="#c5a253" stroke-width="0.5" opacity="0.45"/>'
+  +'<text x="340" y="308" text-anchor="middle" font-family="\'Nanum Myeongjo\',\'Noto Serif KR\',Georgia,serif" font-size="14" fill="#e8e0cf">소중한 투자 회원님을 정중히 모십니다</text>'
+  +'<text x="340" y="348" text-anchor="middle" font-family="\'Nanum Myeongjo\',\'Noto Serif KR\',Georgia,serif" font-size="21" fill="#f3eee2">투자 회원 초청 칵테일 리셉션</text>'
+  +'<text x="340" y="376" text-anchor="middle" font-family="Georgia, serif" font-style="italic" font-size="15" fill="#d4b16a">Cocktail Reception &amp; Celebration</text>'
+  +'<path d="M340 404 L346 410 L340 416 L334 410 Z" fill="#c5a253"/>'
+  +'<text x="340" y="446" text-anchor="middle" font-family="Georgia, serif" font-size="12" letter-spacing="3" fill="#c5a253">일시 · DATE</text>'
+  +'<text x="340" y="469" text-anchor="middle" font-family="\'Nanum Myeongjo\',\'Noto Serif KR\',Georgia,serif" font-size="16" fill="#f3eee2">'+esc(c.date)+' · '+esc(c.time)+'</text>'
+  +'<text x="340" y="505" text-anchor="middle" font-family="Georgia, serif" font-size="12" letter-spacing="3" fill="#c5a253">장소 · VENUE</text>'
+  +'<text x="340" y="528" text-anchor="middle" font-family="\'Nanum Myeongjo\',\'Noto Serif KR\',Georgia,serif" font-size="16" fill="#f3eee2">'+esc(hall)+'</text>'
+  +'<text x="340" y="549" text-anchor="middle" font-family="\'Nanum Myeongjo\',\'Noto Serif KR\',Georgia,serif" font-size="14" fill="#dcd4c2">서울 영등포구 국제금융로 10 (여의도)</text>'
+  +'<text x="340" y="585" text-anchor="middle" font-family="Georgia, serif" font-size="12" letter-spacing="3" fill="#c5a253">드레스코드 · DRESS</text>'
+  +'<text x="340" y="608" text-anchor="middle" font-family="\'Nanum Myeongjo\',\'Noto Serif KR\',Georgia,serif" font-size="15" fill="#f3eee2">'+esc(c.dress)+'</text>'
+  +'<line x1="230" y1="640" x2="320" y2="640" stroke="#c5a253" stroke-width="0.5" opacity="0.5"/>'
+  +'<path d="M340 635 L345 640 L340 645 L335 640 Z" fill="#c5a253"/>'
+  +'<line x1="360" y1="640" x2="450" y2="640" stroke="#c5a253" stroke-width="0.5" opacity="0.5"/>'
+  +'<text x="340" y="666" text-anchor="middle" font-family="Georgia, serif" font-size="12" letter-spacing="3" fill="#c5a253">참석 회신 · RSVP</text>'
+  +'<text x="340" y="690" text-anchor="middle" font-family="\'Nanum Myeongjo\',\'Noto Serif KR\',Georgia,serif" font-size="15" fill="#f3eee2">2026년 7월 18일(금)까지</text>'
+  +'<text x="340" y="712" text-anchor="middle" font-family="Georgia, serif" font-size="14" fill="#f0ead9">'+esc(c.email)+'</text>'
+  +'<line x1="250" y1="736" x2="430" y2="736" stroke="#c5a253" stroke-width="0.5" opacity="0.35"/>'
+  +'<text x="340" y="760" text-anchor="middle" font-family="\'Nanum Myeongjo\',\'Noto Serif KR\',Georgia,serif" font-size="14" fill="#e8e0cf">Janus Henderson Korea 대표이사 '+esc(c.rep)+' 드림</text>'
+  +'<text x="340" y="780" text-anchor="middle" font-family="\'Nanum Myeongjo\',\'Noto Serif KR\',Georgia,serif" font-size="12" fill="#cbb9a0">발레파킹 제공 · 초청장을 지참해 주십시오</text>'
+  +'</svg>';
+}
+
+function progCard(c){
+  return '<svg viewBox="108 8 464 564" xmlns="http://www.w3.org/2000/svg">'
+  +'<rect x="120" y="20" width="440" height="540" rx="8" fill="#102746"/>'
+  +'<rect x="120" y="20" width="440" height="540" rx="8" fill="none" stroke="#27466f" stroke-width="1"/>'
+  +'<rect x="142" y="42" width="396" height="496" rx="4" fill="none" stroke="#c5a253" stroke-width="1"/>'
+  +'<rect x="148" y="48" width="384" height="484" rx="3" fill="none" stroke="#c5a253" stroke-width="0.5" opacity="0.55"/>'
+  +'<text x="340" y="88" text-anchor="middle" font-family="Georgia, serif" font-size="12" letter-spacing="6" fill="#c5a253">P R O G R A M M E</text>'
+  +'<line x1="252" y1="104" x2="306" y2="104" stroke="#c5a253" stroke-width="0.5"/>'
+  +'<path d="M340 98 L346 104 L340 110 L334 104 Z" fill="#c5a253"/>'
+  +'<line x1="374" y1="104" x2="428" y2="104" stroke="#c5a253" stroke-width="0.5"/>'
+  +'<text x="340" y="144" text-anchor="middle" font-family="\'Nanum Myeongjo\',\'Noto Serif KR\',Georgia,serif" font-size="20" fill="#f3eee2">칵테일 리셉션 순서</text>'
+  +'<text x="340" y="168" text-anchor="middle" font-family="Georgia, serif" font-style="italic" font-size="13" fill="#d4b16a">Cocktail Reception · Programme</text>'
+  +'<path d="M340 192 L346 198 L340 204 L334 198 Z" fill="#c5a253"/>'
+  +'<line x1="206" y1="234" x2="206" y2="470" stroke="#c5a253" stroke-width="0.5" opacity="0.6"/>'
+  +'<circle cx="206" cy="235" r="3" fill="#c5a253"/>'
+  +'<text x="190" y="240" text-anchor="end" font-family="Georgia, serif" font-size="14" fill="#d4b16a">18:30</text>'
+  +'<text x="222" y="236" font-family="\'Nanum Myeongjo\',\'Noto Serif KR\',Georgia,serif" font-size="15" fill="#f3eee2">입장 · 웰컴 리셉션</text>'
+  +'<text x="222" y="253" font-family="Georgia, serif" font-style="italic" font-size="11.5" fill="#c2b89f">Welcome reception</text>'
+  +'<circle cx="206" cy="293" r="3" fill="#c5a253"/>'
+  +'<text x="190" y="298" text-anchor="end" font-family="Georgia, serif" font-size="14" fill="#d4b16a">19:00</text>'
+  +'<text x="222" y="294" font-family="\'Nanum Myeongjo\',\'Noto Serif KR\',Georgia,serif" font-size="15" fill="#f3eee2">환영사</text>'
+  +'<text x="222" y="311" font-family="Georgia, serif" font-style="italic" font-size="11.5" fill="#c2b89f">Welcome address</text>'
+  +'<circle cx="206" cy="351" r="3" fill="#c5a253"/>'
+  +'<text x="190" y="356" text-anchor="end" font-family="Georgia, serif" font-size="14" fill="#d4b16a">19:30</text>'
+  +'<text x="222" y="352" font-family="\'Nanum Myeongjo\',\'Noto Serif KR\',Georgia,serif" font-size="15" fill="#f3eee2">건배 제의</text>'
+  +'<text x="222" y="369" font-family="Georgia, serif" font-style="italic" font-size="11.5" fill="#c2b89f">Toast</text>'
+  +'<circle cx="206" cy="409" r="3" fill="#c5a253"/>'
+  +'<text x="190" y="414" text-anchor="end" font-family="Georgia, serif" font-size="14" fill="#d4b16a">19:35</text>'
+  +'<text x="222" y="410" font-family="\'Nanum Myeongjo\',\'Noto Serif KR\',Georgia,serif" font-size="15" fill="#f3eee2">만찬 · 네트워킹 · 특별 공연</text>'
+  +'<text x="222" y="427" font-family="Georgia, serif" font-style="italic" font-size="11.5" fill="#c2b89f">Dinner · networking · performance</text>'
+  +'<circle cx="206" cy="467" r="3" fill="#c5a253"/>'
+  +'<text x="190" y="472" text-anchor="end" font-family="Georgia, serif" font-size="14" fill="#d4b16a">21:00</text>'
+  +'<text x="222" y="468" font-family="\'Nanum Myeongjo\',\'Noto Serif KR\',Georgia,serif" font-size="15" fill="#f3eee2">자유 환담</text>'
+  +'<text x="222" y="485" font-family="Georgia, serif" font-style="italic" font-size="11.5" fill="#c2b89f">Open networking — until 9:30 pm</text>'
+  +'<line x1="240" y1="508" x2="440" y2="508" stroke="#c5a253" stroke-width="0.5" opacity="0.4"/>'
+  +'<text x="340" y="528" text-anchor="middle" font-family="\'Nanum Myeongjo\',\'Noto Serif KR\',Georgia,serif" font-size="11.5" fill="#c2b89f">본 순서는 현장 상황에 따라 변동될 수 있습니다</text>'
+  +'</svg>';
+}
+
+function val(id){return document.getElementById(id).value.trim();}
+function commonCfg(){
+  return {
+    date:val("f-date")||"2026. 7. 25 (토)",
+    time:val("f-time")||"오후 6시 30분",
+    floor:val("f-floor"),
+    dress:val("f-dress"),
+    email:val("f-email")||"events.korea@janushenderson.com",
+    rep:val("f-rep")||"○○○"
+  };
+}
+
+function rasterize(svgEl,scale){
+  return new Promise(function(resolve,reject){
+    var vb=svgEl.getAttribute("viewBox").split(/\s+/).map(Number);
+    var w=vb[2],h=vb[3];
+    var clone=svgEl.cloneNode(true);
+    clone.setAttribute("width",w); clone.setAttribute("height",h);
+    var xml=new XMLSerializer().serializeToString(clone);
+    var url="data:image/svg+xml;charset=utf-8,"+encodeURIComponent(xml);
+    var img=new Image();
+    img.onload=function(){
+      var canvas=document.createElement("canvas");
+      canvas.width=Math.round(w*scale); canvas.height=Math.round(h*scale);
+      var ctx=canvas.getContext("2d");
+      ctx.fillStyle="#ffffff"; ctx.fillRect(0,0,canvas.width,canvas.height);
+      ctx.drawImage(img,0,0,canvas.width,canvas.height);
+      resolve(canvas);
+    };
+    img.onerror=reject;
+    img.src=url;
+  });
+}
+function downloadPng(svgEl,filename){
+  rasterize(svgEl,3).then(function(canvas){
+    canvas.toBlob(function(blob){
+      var a=document.createElement("a");
+      a.href=URL.createObjectURL(blob); a.download=filename; a.click();
+      setTimeout(function(){URL.revokeObjectURL(a.href);},1500);
+    },"image/png");
+  }).catch(function(){alert("图片导出失败，可改用“打印 / 存为 PDF”。");});
+}
+function downloadPdf(){
+  var svgs=Array.prototype.slice.call(document.querySelectorAll("#cards svg"));
+  if(!svgs.length)return;
+  if(!(window.jspdf&&window.jspdf.jsPDF)){alert("PDF 组件未加载（可能离线），已改用打印窗口，请在其中选择“另存为 PDF”。");window.print();return;}
+  var jsPDF=window.jspdf.jsPDF;
+  var pdf=new jsPDF({unit:"pt",format:"a5",orientation:"portrait"});
+  var pw=pdf.internal.pageSize.getWidth(),ph=pdf.internal.pageSize.getHeight();
+  var i=0;
+  (function next(){
+    if(i>=svgs.length){pdf.save("janus_henderson_invitations.pdf");return;}
+    rasterize(svgs[i],3).then(function(canvas){
+      var data=canvas.toDataURL("image/png");
+      var iw=canvas.width,ih=canvas.height,m=18;
+      var r=Math.min((pw-m*2)/iw,(ph-m*2)/ih);
+      var w=iw*r,h=ih*r,x=(pw-w)/2,y=(ph-h)/2;
+      if(i>0)pdf.addPage();
+      pdf.addImage(data,"PNG",x,y,w,h);
+      i++; next();
+    }).catch(function(){i++;next();});
+  })();
+}
+
+function addPage(svgString,rawName,kind){
+  var page=document.createElement("div"); page.className="card-page";
+  var wrap=document.createElement("div"); wrap.className="card-wrap";
+  wrap.innerHTML=svgString; page.appendChild(wrap);
+  var tools=document.createElement("div"); tools.className="card-tools no-print";
+  var btn=document.createElement("button"); btn.textContent="下载 PNG";
+  var svgEl=wrap.querySelector("svg");
+  var safe=(rawName||"guest").replace(/[\\/:*?"<>|\u3000\s]+/g,"_");
+  btn.addEventListener("click",function(){downloadPng(svgEl,safe+"_"+kind+".png");});
+  tools.appendChild(btn); page.appendChild(tools);
+  document.getElementById("cards").appendChild(page);
+}
+
+function build(){
+  var c=commonCfg();
+  var progOn=document.getElementById("f-prog").checked;
+  var names=val("f-names").split("\n").map(function(s){return s.trim();}).filter(Boolean);
+  var wrap=document.getElementById("cards"); wrap.innerHTML="";
+  names.forEach(function(n){
+    addPage(inviteCard(honor(n),c),n,"초청장");
+    if(progOn)addPage(progCard(c),n,"순서");
+  });
+  document.getElementById("count").textContent="共 "+names.length+" 位 · "+wrap.children.length+" 张卡片";
+}
+
+document.getElementById("btn-gen").addEventListener("click",build);
+document.getElementById("btn-pdf").addEventListener("click",function(){build();setTimeout(downloadPdf,60);});
+document.getElementById("btn-print").addEventListener("click",function(){build();window.print();});
+["f-date","f-time","f-floor","f-dress","f-rep","f-email","f-prog"].forEach(function(id){
+  document.getElementById(id).addEventListener("input",build);
+});
+build();
+</script>
+</body>
+</html>
